@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +25,6 @@ public class Club {
     private String content;
     @CreationTimestamp
     private LocalDateTime createdOn;
-    @CreationTimestamp
+    @UpdateTimestamp
     private  LocalDateTime updatedOn;
 }

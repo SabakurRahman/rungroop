@@ -1,0 +1,47 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+  <title>Club List</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+  <section layout:fragment="body" class="py-5">
+    <h3 class="text-center">Edit Club</h3>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form class="needs-validation" role="form" method="post" action="/clubs/create" novalidate>
+            <input type="hidden" th:field="*{clubDto.Id}">
+            <div class="form-group">
+              <label for="content">Content</label>
+              <input type="text" class="form-control" id="content"  th:field="*{clubDto.content}" placeholder="Content" name="content" required>
+              <div class="invalid-feedback">
+                Please provide content.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="photoUrl">Photo Url</label>
+              <input type="text" class="form-control"   th:field="*{clubDto.photoUrl}" id="photoUrl" name="photoUrl" placeholder="PhotoUrl" required>
+              <div class="invalid-feedback">
+                Please provide a photo URL.
+              </div>
+            </div>
+            <div class="form-group mb-2" >
+              <label for="title">Title</label>
+              <input type="text" class="form-control" th:field="*{clubDto.title}" id="title" name="title" placeholder="Title" required>
+              <div class="invalid-feedback">
+                Please provide a title.
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Edit Club</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+</body>
+</html>
