@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClubeServiceImp implements ClubService{
@@ -20,19 +21,20 @@ public class ClubeServiceImp implements ClubService{
     @Override
     public List<ClubDto> findAllClubs() {
         List<Club> clubs = clubRepository.findAll();
-        List<ClubDto> clubDtoList = new ArrayList<>();
-        for (Club club : clubs) {
-            ClubDto clubDto = new ClubDto();
-            clubDto.setId(club.getId());
-            clubDto.setContent(club.getContent());
-            clubDto.setTitle(club.getTitle());
-            clubDto.setPhotoUrl(club.getPhotoUrl());
-            clubDto.setCreatedOn(club.getCreatedOn());
-            clubDto.setUpdatedOn(club.getUpdatedOn());
-            clubDtoList.add(clubDto);
-
-        }
-        return clubDtoList;
+       // List<ClubDto> clubDtoList = new ArrayList<>();
+//        for (Club club : clubs) {
+//            ClubDto clubDto = new ClubDto();
+//            clubDto.setId(club.getId());
+//            clubDto.setContent(club.getContent());
+//            clubDto.setTitle(club.getTitle());
+//            clubDto.setPhotoUrl(club.getPhotoUrl());
+//            clubDto.setCreatedOn(club.getCreatedOn());
+//            clubDto.setUpdatedOn(club.getUpdatedOn());
+//            clubDtoList.add(clubDto);
+//
+//        }
+        return clubs.stream().map((club) -> mapToClubToDto(club)).collect(Collectors.toList());
+//        return clubDtoList;
     }
 
     @Override
@@ -46,6 +48,23 @@ public class ClubeServiceImp implements ClubService{
          Club club = clubRepository.findById(clubId).get();
          return mapToClubToDto(club);
 
+    }
+
+    @Override
+    public void updateClub(ClubDto clubDto) {
+        Club club = mapToclubDtoToClub(clubDto);
+        clubRepository.save(club);
+    }
+
+    private Club mapToclubDtoToClub(ClubDto clubDto) {
+        Club club = Club.builder().Id(clubDto.getId())
+                .title(clubDto.getTitle())
+                .photoUrl(clubDto.getPhotoUrl())
+                .content(clubDto.getContent())
+                .createdOn(clubDto.getCreatedOn())
+                .updatedOn(clubDto.getUpdatedOn())
+                .build();
+        return club;
     }
 
     private ClubDto mapToClubToDto(Club club) {

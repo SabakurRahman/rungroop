@@ -25,6 +25,7 @@
                 <div th:each="club :${clubs}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-3">
                         <img class="img-fluid rounded-3 mb-3" th:src="${club.photoUrl}" alt="..." />
+                        <a class="h3 fw-bolder text-decoration-none  " th:href="@{/clubs/{clubId}(clubId=${club.Id})}" th:text="${club.title}" ></a>
                         <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.Id})}" th:text="View"></a>
                         <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.Id})}" th:text="Edit"></a>
 

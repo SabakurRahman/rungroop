@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Component
 @Builder
 
 public class ClubDto {
