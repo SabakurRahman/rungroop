@@ -12,27 +12,24 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <form class="needs-validation" role="form" method="post" action="/clubs/create" novalidate>
+          <form class="needs-validation" role="form" method="post" th:action="@{/clubs/create}" th:object="${club}">
             <div class="form-group">
               <label for="content">Content</label>
-              <input type="text" class="form-control" id="content" placeholder="Content" name="content" required>
-              <div class="invalid-feedback">
-                Please provide content.
-              </div>
+              <input type="text" class="form-control" id="content" placeholder="Content" name="content">
+              <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
+
+
             </div>
             <div class="form-group">
               <label for="photoUrl">Photo Url</label>
-              <input type="text" class="form-control" id="photoUrl" name="photoUrl" placeholder="PhotoUrl" required>
-              <div class="invalid-feedback">
-                Please provide a photo URL.
-              </div>
+              <input type="text" class="form-control" id="photoUrl" name="photoUrl" placeholder="PhotoUrl" >
+              <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
             </div>
             <div class="form-group mb-2" >
               <label for="title">Title</label>
-              <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
-              <div class="invalid-feedback">
-                Please provide a title.
-              </div>
+              <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+              <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+
             </div>
             <button type="submit" class="btn btn-primary">Create New Club</button>
           </form>

@@ -12,28 +12,29 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <form class="needs-validation" role="form" method="post" th:action="@{/clubs/{clubId}/edit(clubId=${clubDto.Id})}" novalidate>
-            <input type="hidden" th:field="*{clubDto.Id}">
+          <form class="needs-validation" role="form" method="post" th:action="@{/clubs/{clubId}/edit(clubId=${clubDto.Id})}" th:object="${clubDto}" >
+            <input type="hidden" th:field="*{Id}">
             <div class="form-group">
               <label for="content">Content</label>
-              <input type="text" class="form-control" id="content"  th:field="*{clubDto.content}" placeholder="Content" name="content" required>
-              <div class="invalid-feedback">
-                Please provide content.
-              </div>
+              <input type="text" class="form-control" id="content"
+                     th:field="*{content}" placeholder="Content"
+                     name="content" >
+              <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
             </div>
             <div class="form-group">
               <label for="photoUrl">Photo Url</label>
-              <input type="text" class="form-control"   th:field="*{clubDto.photoUrl}" id="photoUrl" name="photoUrl" placeholder="PhotoUrl" required>
-              <div class="invalid-feedback">
-                Please provide a photo URL.
-              </div>
+              <input type="text" class="form-control"   th:field="*{photoUrl}" id="photoUrl"
+                     name="photoUrl" placeholder="PhotoUrl" >
+              <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
+
             </div>
             <div class="form-group mb-2" >
               <label for="title">Title</label>
-              <input type="text" class="form-control" th:field="*{clubDto.title}" id="title" name="title" placeholder="Title" required>
-              <div class="invalid-feedback">
-                Please provide a title.
-              </div>
+              <input type="text" class="form-control" th:field="*{title}"
+                     id="title" name="title" placeholder="Title" >
+              <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+
+
             </div>
             <button type="submit" class="btn btn-primary">Edit Club</button>
           </form>

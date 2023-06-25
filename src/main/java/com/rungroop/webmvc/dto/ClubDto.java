@@ -2,6 +2,8 @@ package com.rungroop.webmvc.dto;
 
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +19,11 @@ import java.time.LocalDateTime;
 public class ClubDto {
 
     private Long Id;
+    @NotEmpty(message = "title is mandatory")
     private String title;
+    @NotEmpty(message = "Photo Url Link should not be empty")
     private String photoUrl;
+    @NotEmpty(message = "Content should not be empty")
     private String content;
     private LocalDateTime createdOn;
     private  LocalDateTime updatedOn;
