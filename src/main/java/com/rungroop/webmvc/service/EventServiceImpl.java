@@ -6,8 +6,10 @@ import com.rungroop.webmvc.model.Event;
 import com.rungroop.webmvc.repository.ClubRepository;
 import com.rungroop.webmvc.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class EventServiceImpl implements EventService{
     @Autowired
     EventRepository eventRepository;
