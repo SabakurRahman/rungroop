@@ -1,7 +1,9 @@
 package com.rungroop.webmvc.service;
 
 import com.rungroop.webmvc.dto.ClubDto;
+import com.rungroop.webmvc.dto.EventDto;
 import com.rungroop.webmvc.model.Club;
+import com.rungroop.webmvc.model.Event;
 import com.rungroop.webmvc.repository.ClubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,11 +88,28 @@ public class ClubeServiceImp implements ClubService{
                 .title(club.getTitle())
                 .content(club.getContent())
                 .photoUrl(club.getPhotoUrl())
+                .events(club.getEvents().stream().map((event) -> mapToEventToDto(event)).collect(Collectors.toList()))
                 .createdOn(club.getCreatedOn())
                 .createdOn(club.getUpdatedOn())
                 .build();
 
         return clubDto;
+    }
+
+    private EventDto mapToEventToDto(Event event) {
+        EventDto eventDto = EventDto.builder()
+                .Id(event.getId())
+                .name(event.getName())
+                .type(event.getType())
+                .startTime(event.getStartTime())
+                .endTime(event.getEndTime())
+                .photoUrl(event.getPhotoUrl())
+                .createdOn(event.getCreatedOn())
+                .updatedOn(event.getUpdatedOn())
+                .build();
+
+        return eventDto;
+
     }
 
 }

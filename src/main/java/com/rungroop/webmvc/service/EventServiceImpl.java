@@ -8,6 +8,9 @@ import com.rungroop.webmvc.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class EventServiceImpl implements EventService{
@@ -22,6 +25,33 @@ public class EventServiceImpl implements EventService{
         Event event = mapEventDtoToEvent(eventDto);
         event.setClub(club);
         eventRepository.save(event);
+
+    }
+
+    @Override
+    public List<EventDto> findAllEvents() {
+        List<Event> events = eventRepository.findAll();
+        return events.stream().map((event) -> mapEventToEventDto(event)).collect(Collectors.toList());
+    }
+
+    @Override
+    public EventDto findByeventId(Long eventId) {
+        Event event = eventRepository.findById(eventId).get();
+        return mapEventToEventDto(event);
+    }
+
+    private EventDto mapEventToEventDto(Event event) {
+        EventDto eventDto = EventDto.builder()
+                .Id(event.getId())
+                .name(event.getName())
+                .type(event.getType())
+                .startTime(event.getStartTime())
+                .endTime(event.getEndTime())
+                .photoUrl(event.getPhotoUrl())
+                .createdOn(event.getCreatedOn())
+                .updatedOn(event.getUpdatedOn())
+                .build();
+        return eventDto;
 
     }
 
