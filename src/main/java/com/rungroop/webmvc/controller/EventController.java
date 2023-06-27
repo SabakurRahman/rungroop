@@ -87,4 +87,15 @@ public class EventController {
 
     }
 
+    @GetMapping("/event/{eventId}/delete")
+    public String deleteEvent(@PathVariable("eventId") Long eventId){
+
+        eventService.deleteEvent(eventId);
+        return "redirect:/events";
+
+    }
+
 }
+
+
+

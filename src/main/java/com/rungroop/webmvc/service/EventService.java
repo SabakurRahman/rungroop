@@ -15,4 +15,6 @@ public interface EventService {
     EventDto findByeventId(Long eventId);
 
     void updateEvent(EventDto eventDto);
+
+    void deleteEvent(Long eventId);
 }
