@@ -1,5 +1,6 @@
 package com.rungroop.webmvc.dto;
 
+import com.rungroop.webmvc.model.Club;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -40,4 +41,6 @@ public class EventDto {
     private LocalDateTime createdOn;
 
     private LocalDateTime updatedOn;
+
+    private Club club;
 }

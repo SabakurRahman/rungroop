@@ -1,5 +1,6 @@
 package com.rungroop.webmvc.service;
 
+import com.rungroop.webmvc.dto.ClubDto;
 import com.rungroop.webmvc.dto.EventDto;
 import com.rungroop.webmvc.model.Club;
 import com.rungroop.webmvc.model.Event;
@@ -40,6 +41,15 @@ public class EventServiceImpl implements EventService{
         return mapEventToEventDto(event);
     }
 
+    @Override
+    public void updateEvent(EventDto eventDto) {
+        Event event =mapEventDtoToEvent(eventDto);
+        eventRepository.save(event);
+    }
+
+
+
+
     private EventDto mapEventToEventDto(Event event) {
         EventDto eventDto = EventDto.builder()
                 .Id(event.getId())
@@ -50,6 +60,7 @@ public class EventServiceImpl implements EventService{
                 .photoUrl(event.getPhotoUrl())
                 .createdOn(event.getCreatedOn())
                 .updatedOn(event.getUpdatedOn())
+                .club(event.getClub())
                 .build();
         return eventDto;
 
@@ -65,6 +76,7 @@ public class EventServiceImpl implements EventService{
                 .photoUrl(eventDto.getPhotoUrl())
                 .createdOn(eventDto.getCreatedOn())
                 .updatedOn(eventDto.getUpdatedOn())
+                .club(eventDto.getClub())
                 .build();
         return event;
     }
