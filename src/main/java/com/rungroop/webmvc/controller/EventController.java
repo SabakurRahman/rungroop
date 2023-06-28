@@ -9,6 +9,8 @@ import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,7 +76,17 @@ public class EventController {
     public  String postEditEvent(@PathVariable("eventId") Long eventId,Model model,
                                  @Valid @ModelAttribute("eventDto") EventDto eventDto,BindingResult result){
 
-
+//        if (result.hasErrors()) {
+//            for (FieldError error : result.getFieldErrors()) {
+//                System.out.println("Field: " + error.getField());
+//                System.out.println("Message: " + error.getDefaultMessage());
+//            }
+//        }
+        if (result.hasErrors()) {
+            for (ObjectError error : result.getAllErrors()) {
+                System.out.println(error.getDefaultMessage());
+            }
+        }
         if(result.hasErrors()) {
             model.addAttribute("eventDto",eventDto);
             return "edit-event";

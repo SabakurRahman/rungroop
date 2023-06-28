@@ -1,5 +1,6 @@
 package com.rungroop.webmvc.model;
 
+import com.rungroop.webmvc.validetor.ValidedEndTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
