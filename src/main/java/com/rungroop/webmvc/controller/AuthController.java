@@ -30,6 +30,11 @@ public class AuthController {
 
 
     }
+    @GetMapping("/login")
+    public String getLoginPage(){
+        return "login";
+
+    }
 
     @PostMapping("/register/save")
     public String postRegistationForm(@Valid @ModelAttribute("user") UserRegistationDto userRegistationDto,

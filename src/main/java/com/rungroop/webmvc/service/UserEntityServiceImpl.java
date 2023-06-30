@@ -6,6 +6,7 @@ import com.rungroop.webmvc.model.UserEntity;
 import com.rungroop.webmvc.repository.RoleRepository;
 import com.rungroop.webmvc.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,13 +17,15 @@ public class UserEntityServiceImpl implements UserEntityService{
     UserEntityRepository userEntityRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Override
     public void saveUser(UserRegistationDto userRegistationDto) {
 
         UserEntity user =new UserEntity();
         user.setUsername(userRegistationDto.getUsername());
         user.setEmail(userRegistationDto.getEmail());
-        user.setPassword(userRegistationDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userRegistationDto.getPassword()));
         Role role = roleRepository.findByName("USER");
         user.setRoles(Arrays.asList(role));
         userEntityRepository.save(user);
