@@ -17,10 +17,27 @@ public class CustomerDetailsService implements UserDetailsService {
     @Autowired
     private UserEntityRepository userEntityRepository;
 
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        UserEntity user = userEntityRepository.findFirstByUsername(username);
+//        if(user != null) {
+//            User authUser = new User(
+//                    user.getEmail(),
+//                    user.getPassword(),
+//                    user.getRoles().stream().map((role) -> new SimpleGrantedAuthority(role.getName()))
+//                            .collect(Collectors.toList())
+//            );
+//            return authUser;
+//        } else {
+//            throw new UsernameNotFoundException("Invalid username or password");
+//        }
+//    }
+
+
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userEntityRepository.findFirstByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity user = userEntityRepository.findFirstByEmail(email);
         if(user != null) {
             User authUser = new User(
                     user.getEmail(),
@@ -30,7 +47,11 @@ public class CustomerDetailsService implements UserDetailsService {
             );
             return authUser;
         } else {
-            throw new UsernameNotFoundException("Invalid username or password");
+            throw new UsernameNotFoundException("Invalid Email or password");
         }
     }
+
+
+
+
 }

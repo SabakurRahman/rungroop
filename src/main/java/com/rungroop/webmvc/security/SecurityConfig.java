@@ -14,6 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     private CustomerDetailsService userDetailsService;
 
     @Autowired
@@ -31,7 +32,7 @@ public class SecurityConfig {
 
            http
                 .authorizeRequests()
-                .requestMatchers("/login","/register","/clubs", "/css/**", "/js/**")
+                .requestMatchers("/login","/register","/register/save","/clubs","/css/**", "/js/**")
                 .permitAll()
                    .anyRequest().authenticated()
                 .and()
@@ -40,6 +41,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/clubs")
                         .loginProcessingUrl("/login")
                         .failureUrl("/login?error=true")
+                        .usernameParameter("email")
                         .permitAll()
                 ).logout(
                         logout -> logout
@@ -49,7 +51,10 @@ public class SecurityConfig {
         return http.build();
 
     }
+
+    @Autowired
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
 }
