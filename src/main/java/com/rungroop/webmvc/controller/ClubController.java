@@ -86,5 +86,11 @@ public class ClubController {
         model.addAttribute("clubs", clubs);
         return "club-list";
     }
+    @GetMapping("/test")
+    @ResponseBody
+    public String testDevTools(){
+        return "Hello Word Test For Dvetools Final Test time test";
+
+    }
 
 }
