@@ -27,8 +27,9 @@
                         <img class="img-fluid rounded-3 mb-3" th:src="${club.photoUrl}" alt="..." />
                         <a class="h3 fw-bolder text-decoration-none  " th:href="@{/clubs/{clubId}(clubId=${club.Id})}" th:text="${club.title}" ></a>
                         <a class="btn btn-primary" th:href="@{/clubDetails/{clubId}(clubId=${club.Id})}" th:text="View"></a>
+                        <div th:if="${user.id} == ${club.createdBy.id}">
                         <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.Id})}" th:text="Edit"></a>
-
+                        </div>
                     </div>
                 </div>
         </div>

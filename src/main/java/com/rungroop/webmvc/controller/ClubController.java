@@ -2,6 +2,9 @@ package com.rungroop.webmvc.controller;
 
 import com.rungroop.webmvc.dto.ClubDto;
 import com.rungroop.webmvc.model.Club;
+import com.rungroop.webmvc.model.UserEntity;
+import com.rungroop.webmvc.repository.UserEntityRepository;
+import com.rungroop.webmvc.security.SecurityUtil;
 import com.rungroop.webmvc.service.ClubService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +19,19 @@ import java.util.List;
 public class ClubController {
     @Autowired
     ClubService clubService;
+    @Autowired
+    UserEntityRepository userEntityRepository;
 
     @GetMapping("/clubs")
     public String getAllClub(Model model){
-
+        UserEntity user = new UserEntity();
         List<ClubDto> clubs = clubService.findAllClubs();
+        String username = SecurityUtil.getSessionUser();
+        if(username !=null){
+             user = userEntityRepository.findByEmail(username);
+             model.addAttribute("user",user);
+        }
+        model.addAttribute("user",user);
         model.addAttribute("clubs", clubs);
         return "club-list";
     }
@@ -68,7 +79,14 @@ public class ClubController {
 
     @GetMapping("/clubDetails/{clubId}")
     public String clubDetails(@PathVariable("clubId") Long clubId,Model model){
+        UserEntity user = new UserEntity();
         ClubDto clubDto=clubService.findClubById(clubId);
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userEntityRepository.findByEmail(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);
 
         model.addAttribute("club",clubDto);
         return "club-details";

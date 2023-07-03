@@ -2,6 +2,9 @@ package com.rungroop.webmvc.controller;
 
 import com.rungroop.webmvc.dto.EventDto;
 import com.rungroop.webmvc.model.Event;
+import com.rungroop.webmvc.model.UserEntity;
+import com.rungroop.webmvc.repository.UserEntityRepository;
+import com.rungroop.webmvc.security.SecurityUtil;
 import com.rungroop.webmvc.service.EventService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class EventController {
 
     @Autowired
     EventService eventService;
+    @Autowired
+    UserEntityRepository userEntityRepository;
 
     @GetMapping("/event/{clubId}/create")
     public String getCreateEvent(@PathVariable("clubId") Long clubId, Model model){
@@ -58,7 +63,14 @@ public class EventController {
 
     @GetMapping("/eventDetails/{eventId}")
     public String eventDetails(@PathVariable("eventId") Long eventId, Model model){
+        UserEntity user = new UserEntity();
         EventDto eventDto = eventService.findByeventId(eventId);
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userEntityRepository.findByEmail(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("eventDto",eventDto);
         return "event-details";
 

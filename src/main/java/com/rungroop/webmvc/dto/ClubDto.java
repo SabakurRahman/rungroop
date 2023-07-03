@@ -2,6 +2,7 @@ package com.rungroop.webmvc.dto;
 
 
 
+import com.rungroop.webmvc.model.UserEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,8 @@ public class ClubDto {
     private String content;
     private LocalDateTime createdOn;
     private  LocalDateTime updatedOn;
+
+    private UserEntity createdBy;
 
     private List<EventDto> events;
 

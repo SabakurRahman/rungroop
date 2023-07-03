@@ -4,12 +4,15 @@ import com.rungroop.webmvc.dto.ClubDto;
 import com.rungroop.webmvc.dto.EventDto;
 import com.rungroop.webmvc.model.Club;
 import com.rungroop.webmvc.model.Event;
+import com.rungroop.webmvc.model.UserEntity;
 import com.rungroop.webmvc.repository.ClubRepository;
+import com.rungroop.webmvc.repository.UserEntityRepository;
+import com.rungroop.webmvc.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +21,9 @@ public class ClubeServiceImp implements ClubService{
 
     @Autowired
     private ClubRepository clubRepository;
+
+    @Autowired
+    private UserEntityRepository userEntityRepository;
 
 
     @Override
@@ -41,7 +47,11 @@ public class ClubeServiceImp implements ClubService{
 
     @Override
     public Club saveClub(ClubDto clubDto) {
+        String username = SecurityUtil.getSessionUser();
+        System.out.println(username);
+        UserEntity user = userEntityRepository.findByEmail(username);
         Club club = mapToclubDtoToClub(clubDto);
+        club.setCreatedBy(user);
         clubRepository.save(club);
         return null;
     }
@@ -55,7 +65,11 @@ public class ClubeServiceImp implements ClubService{
 
     @Override
     public void updateClub(ClubDto clubDto) {
+        String username = SecurityUtil.getSessionUser();
+        System.out.println(username);
+        UserEntity user = userEntityRepository.findByEmail(username);
         Club club = mapToclubDtoToClub(clubDto);
+        club.setCreatedBy(user);
         clubRepository.save(club);
     }
 
@@ -78,6 +92,7 @@ public class ClubeServiceImp implements ClubService{
                 .content(clubDto.getContent())
                 .createdOn(clubDto.getCreatedOn())
                 .updatedOn(clubDto.getUpdatedOn())
+                .createdBy(clubDto.getCreatedBy())
                 .build();
         return club;
     }
@@ -91,6 +106,7 @@ public class ClubeServiceImp implements ClubService{
                 .events(club.getEvents().stream().map((event) -> mapToEventToDto(event)).collect(Collectors.toList()))
                 .createdOn(club.getCreatedOn())
                 .createdOn(club.getUpdatedOn())
+                .createdBy(club.getCreatedBy())
                 .build();
 
         return clubDto;
